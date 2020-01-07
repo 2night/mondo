@@ -289,7 +289,7 @@ unittest
 {
    string[] log; 
    MongoLogger.addLogger((LogLevel ll, in string logDomain, in string message) { log ~= message; });
-   mongoc_log(mongoc_log_level_t.LEVEL_ERROR, "test", "asd");
+   mongoc_log(MONGOC_LOG_LEVEL_ERROR, "test", "asd");
    assert(log.length > 0);
 }
 
@@ -639,7 +639,7 @@ class Collection
       scope(exit) { foreach(document; documents) bson_destroy(document); }
 
       assert(documents.length < int.max, "Too many documents to insert");
-      mixin(MongoWrapErrorMixin!"mongoc_collection_insert_bulk(_collection, flags, documents.ptr, cast(int)documents.length, wc, &error) == 0");
+      mixin(MongoWrapErrorMixin!"mongoc_collection_insert_bulk(_collection, flags, cast(const(_bson_t)**)documents.ptr, cast(int)documents.length, wc, &error) == 0");
    }
 
    /// Return number of documents matching conditions
