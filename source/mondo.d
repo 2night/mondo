@@ -1,4 +1,4 @@
-﻿private import mongoc;
+﻿import mongoc;
 
 import bsond;
 
@@ -8,14 +8,18 @@ private import std.conv       : to, text;
 private import std.regex      : regex, match;
 private import std.string     : toUpper, toStringz;
 private import std.range      : empty, isInputRange, ElementType, array;
-
+import std.traits : EnumMembers;
+import std.algorithm : map;
+import std.conv : to;
+import std.array : array;
+import std.string : join;
 
 // Some alias over c library structs/enums
 alias LogLevel    = mongoc_log_level_t;
-alias QueryFlags  = mongoc_query_flags_t;
-alias InsertFlags = mongoc_insert_flags_t;
-alias DeleteFlags = mongoc_delete_flags_t;
-alias UpdateFlags = mongoc_update_flags_t;
+//alias QueryFlags  = mongoc_query_flags_t;
+//alias InsertFlags = mongoc_insert_flags_t;
+//alias DeleteFlags = mongoc_delete_flags_t;
+//alias UpdateFlags = mongoc_update_flags_t;
 
 alias ErrorCodes     = mongoc_error_code_t;
 alias ErrorDomains   = mongoc_error_domain_t;
@@ -411,7 +415,7 @@ class Mongo
       auto copy = mongoc_read_prefs_copy(prefs);
       scope(exit) mongoc_read_prefs_destroy(copy);
      
-      bool result = mongoc_client_get_server_status(_client, copy, &reply, &error);
+      auto result = mongoc_client_get_server_status(_client, copy, &reply, &error);
      
       auto response = BsonObject(bson_get_data(&reply));
 
@@ -823,7 +827,7 @@ struct Cursor(T = BsonObject) if (is(T == BsonObject) || isBsonContainer!T)
       _inited = true;
 
       // Read next value
-      if (!mongoc_cursor_next(_cursor, &_current))
+      if (!mongoc_cursor_next(_cursor, cast(const(bson_t)**) &_current))
       {
          _empty = true;
          return false;

@@ -1,0 +1,8 @@
+mixin dpp.EnumD!("DeleteFlags",mongoc_delete_flags_t,"MONGOC_DELETE_");
+mixin dpp.EnumD!("RemoveFlags",mongoc_remove_flags_t,"MONGOC_REMOVE_");
+mixin dpp.EnumD!("InsertFlags",mongoc_insert_flags_t,"MONGOC_INSERT_");
+mixin dpp.EnumD!("QueryFlags",mongoc_query_flags_t,"MONGOC_QUERY_");
+mixin dpp.EnumD!("ReplyFlags",mongoc_reply_flags_t,"MONGOC_REPLY_");
+mixin dpp.EnumD!("UpdateFlags",mongoc_update_flags_t,"MONGOC_UPDATE_");
+
+#include "mongoc.h"

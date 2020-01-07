@@ -7,7 +7,8 @@ import std.array;
 import std.traits;
 import std.conv;
 
-import mongoc;
+//import mongoc;
+import bsonc;
 
 alias BsonLong      = long;
 alias BsonInt       = int;
@@ -20,6 +21,8 @@ alias BsonNull      = typeof(null);
 // Cut verbosiy
 alias BO = BsonObject;
 alias BA = BsonArray;
+
+alias size_t = object.size_t; // override the bson header's definition translated from C
 
 enum BsonExceptionCode
 {
