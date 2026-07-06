@@ -205,3 +205,6 @@ class RandomUserGenerator
 ### More examples
 
 For more examples just check unittests :)
+
+### Privacy
+This project does not collect, store, or process any Personally Identifiable Information (PII).
